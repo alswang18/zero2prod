@@ -95,7 +95,14 @@ async fn subscribe_sends_a_confirmation_email_with_a_link() {
     app.post_subscriptions(body.into()).await;
 
     // Assert
-    let email_request = &app.email_server.received_requests().await.unwrap()[0];
+    let email_request = &app
+        .email_server
+        .received_requests()
+        .await
+        .unwrap()
+        .pop()
+        .unwrap();
+
     let confirmation_links = app.get_confirmation_links(email_request);
 
     // The two links should be identical
