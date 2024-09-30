@@ -1,5 +1,4 @@
 use crate::authentication::UserId;
-use crate::session_state::TypedSession;
 use crate::utils::e500;
 use actix_web::http::header::ContentType;
 use actix_web::{web, HttpResponse};
@@ -29,10 +28,11 @@ pub async fn admin_dashboard(
     <ol>
         <li><a href="/admin/password">Change password</a></li>
         <li>
-        <form name="logoutForm" action="/admin/logout" method="post">
-            <input type="submit" value="Logout">
+            <form name="logoutForm" action="/admin/logout" method="post">
+                <input type="submit" value="Logout">
             </form>
         </li>
+        <li><a href="/admin/newsletters">Send a newsletter issue</a></li>
     </ol>
 </body>
 </html>"#
