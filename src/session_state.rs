@@ -16,6 +16,9 @@ impl TypedSession {
     pub fn get_user_id(&self) -> Result<Option<Uuid>, SessionGetError> {
         self.0.get(Self::USER_ID_KEY)
     }
+    pub fn log_out(self) {
+        self.0.purge()
+    }
 }
 
 impl FromRequest for TypedSession {
@@ -27,7 +30,8 @@ impl FromRequest for TypedSession {
     // From request expects a `Future` as return type to allow for extractors
     // that need to perform asynchronous operations (e.g. a HTTP call)
     // We do not have a `Future`, because we don't perform any I/O,
-    // so we wrap `TypedSession` into `Ready` to convert it into a `Future` that // resolves to the wrapped value the first time it's polled by the executor.
+    // so we wrap `TypedSession` into `Ready` to convert it into a `Future` that
+    // resolves to the wrapped value the first time it's polled by the executor.
     type Future = Ready<Result<TypedSession, Self::Error>>;
     fn from_request(req: &HttpRequest, _payload: &mut Payload) -> Self::Future {
         ready(Ok(TypedSession(req.get_session())))
