@@ -4,7 +4,6 @@ use fake::faker::name::en::Name;
 use fake::Fake;
 use std::time::Duration;
 use wiremock::matchers::{method, path};
-use wiremock::MockBuilder;
 use wiremock::{Mock, ResponseTemplate};
 
 #[tokio::test]
